@@ -2,6 +2,26 @@
 
 Make multiple Ethereum network requests in a single HTTP query. [multicall](https://github.com/mds1/multicall) for ethers v5.
 
+## Build
+
+```
+yarn
+yarn build
+```
+
+## Test
+
+```
+yarn test
+```
+
+## Publish
+
+Set your NPM auth token in `.npmrc`, then run:
+```
+npm publish
+```
+
 ## API
 
 * `Contract(address, abi)`: Create contract instance; calling `contract.callFuncName` will yield a `call` object
@@ -9,7 +29,7 @@ Make multiple Ethereum network requests in a single HTTP query. [multicall](http
 * `calls`: List of helper call methods
 * `getEthBalance(address)`: Returns account ether balance
 
-## Example
+### Example
 
 ```ts
 import { Contract, Provider } from 'ethers-multicall';
