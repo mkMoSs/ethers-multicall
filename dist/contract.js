@@ -42,7 +42,7 @@ var Contract = /** @class */ (function () {
 }());
 exports.Contract = Contract;
 function toFragment(abi) {
-    return abi.map(function (item) { return abi_1.Fragment.from(item); });
+    return abi.map(function (item) { return abi_1.Fragment.from(item); }).filter(function (fragment) { return fragment !== null; });
 }
 function makeCallFunction(contract, name) {
     return function () {
