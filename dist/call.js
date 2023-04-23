@@ -93,10 +93,15 @@ function tryAll(calls, multicallAddress, provider) {
                     callResult = [];
                     for (i = 0; i < callCount; i++) {
                         outputs = calls[i].outputs;
-                        returnData = response.returnData[i];
-                        params = abi_1.Abi.decode(outputs, returnData);
-                        result = params;
-                        callResult.push(result);
+                        if (response[i].success) {
+                            returnData = response[i].returnData;
+                            params = abi_1.Abi.decode(outputs, returnData);
+                            result = outputs.length === 1 ? params[0] : params;
+                            callResult.push({ success: true, result: result });
+                        }
+                        else {
+                            callResult.push({ success: false });
+                        }
                     }
                     return [2 /*return*/, callResult];
             }
