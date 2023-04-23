@@ -95,7 +95,7 @@ function tryAll(calls, multicallAddress, provider) {
                         outputs = calls[i].outputs;
                         returnData = response.returnData[i];
                         params = abi_1.Abi.decode(outputs, returnData);
-                        result = outputs.length === 1 ? params[0] : params;
+                        result = params;
                         callResult.push(result);
                     }
                     return [2 /*return*/, callResult];
