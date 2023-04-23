@@ -49,10 +49,14 @@ export async function tryAll<T extends any[] = any[]>(
     const callResult = [] as T;
     for (let i = 0; i < callCount; i++) {
         const outputs = calls[i].outputs;
-        const returnData = response.returnData[i];
-        const params = Abi.decode(outputs, returnData);
-        const result = params;
-        callResult.push(result);
+        if (response[i].success) {
+            const returnData = response[i].returnData;
+            const params = Abi.decode(outputs, returnData);
+            const result = outputs.length === 1 ? params[0] : params;
+            callResult.push({success: true, result});
+        } else {
+            callResult.push({success: false});
+        }
     }
     return callResult;
 }
