@@ -36,7 +36,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.all = void 0;
+exports.tryAll = exports.all = void 0;
 var contracts_1 = require("@ethersproject/contracts");
 var abi_1 = require("./abi");
 var multicall_1 = require("./abi/multicall");
@@ -72,3 +72,35 @@ function all(calls, multicallAddress, provider) {
     });
 }
 exports.all = all;
+function tryAll(calls, multicallAddress, provider) {
+    return __awaiter(this, void 0, void 0, function () {
+        var multicall, callRequests, response, callCount, callResult, i, outputs, returnData, params, result;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0:
+                    multicall = new contracts_1.Contract(multicallAddress, multicall_1.multicallAbi, provider);
+                    callRequests = calls.map(function (call) {
+                        var callData = abi_1.Abi.encode(call.name, call.inputs, call.params);
+                        return {
+                            target: call.contract.address,
+                            callData: callData,
+                        };
+                    });
+                    return [4 /*yield*/, multicall.tryAggregate(false, callRequests)];
+                case 1:
+                    response = _a.sent();
+                    callCount = calls.length;
+                    callResult = [];
+                    for (i = 0; i < callCount; i++) {
+                        outputs = calls[i].outputs;
+                        returnData = response.returnData[i];
+                        params = abi_1.Abi.decode(outputs, returnData);
+                        result = outputs.length === 1 ? params[0] : params;
+                        callResult.push(result);
+                    }
+                    return [2 /*return*/, callResult];
+            }
+        });
+    });
+}
+exports.tryAll = tryAll;

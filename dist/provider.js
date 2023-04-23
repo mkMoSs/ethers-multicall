@@ -77,6 +77,16 @@ var Provider = /** @class */ (function () {
             });
         });
     };
+    Provider.prototype.tryAll = function (calls) {
+        return __awaiter(this, void 0, void 0, function () {
+            return __generator(this, function (_a) {
+                if (!this._provider) {
+                    throw new Error('Provider should be initialized before use.');
+                }
+                return [2 /*return*/, call_1.tryAll(calls, this._multicallAddress, this._provider)];
+            });
+        });
+    };
     return Provider;
 }());
 exports.Provider = Provider;

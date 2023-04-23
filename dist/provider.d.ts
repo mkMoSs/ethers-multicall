@@ -7,5 +7,6 @@ export declare class Provider {
     init(): Promise<void>;
     getEthBalance(address: string): any;
     all<T extends any[] = any[]>(calls: ContractCall[]): Promise<T>;
+    tryAll<T extends any[] = any[]>(calls: ContractCall[]): Promise<T>;
 }
 export declare function setMulticallAddress(chainId: number, address: string): void;
